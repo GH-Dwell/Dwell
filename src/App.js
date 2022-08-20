@@ -4,6 +4,8 @@ import Select from 'react-select'
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import { Map, Marker } from "pigeon-maps"
+// import { MapContainer, TileLayer, Popup, Marker } from 'react-leaflet';
+// import 'leaflet/dist/leaflet.css';
 
 function App() {
   const stateOptions = [
@@ -37,8 +39,19 @@ function App() {
   ];
 
   const [coor, setCoor] = useState([-33.8688, 151.2093]);
-  const [mark, setMark] = useState([0, 0]);
+  const [zoom, setZoom] = useState(5);
+  const [mark1, setMark1] = useState([0, 0]);
   const [rent, setRent] = useState(false);
+
+  const setAll = () => {
+    setCoor([-33.8688, 151.2093]);
+    setZoom(11);
+
+    setMark1([-33.8688, 151.2093]);
+    // setMark2([-33.8688, 151.2093]);
+    // setMark3([-33.8688, 151.2093]);
+    // setMark4([-33.8688, 151.2093]);
+  }
 
   return (
     <div className="App">
@@ -47,10 +60,24 @@ function App() {
           <h1>Dwell</h1>
         </div>
         <div className='app-map'>
-          <Map height={300} defaultCenter={coor} defaultZoom={11}>
-            <Marker width={50} anchor={mark} />
-            {/* <Marker width={50} anchor={[-33.8688, 151.2093]} /> */}
-            {/* <Marker width={50} anchor={[-33.838634, 151.207114]} /> */}
+        {/* <MapContainer 
+          // style={{height: '50vh', width: '50wh'}}
+          center={coor}
+          zoom={zoom}
+          scrollWheelZoom={false}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={mark1}>
+            <Popup>
+              A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+          </Marker>
+        </MapContainer> */}
+          <Map height={300}
+            defaultCenter={coor} defaultZoom={4} zoom={zoom} center={coor}>
+            <Marker width={50} anchor={mark1} />
           </Map>
         </div>
         <div className='app-body'>
@@ -63,10 +90,12 @@ function App() {
             options={ageOptions}
             placeholder="Select a Age Group"
           />
+          <p></p>
           <Select
             options={incomeOptions}
             placeholder="Select Weekly Income"
           />
+          <p></p>
           <Select
             options={cityOptions}
             placeholder="Select a Work Location"
@@ -80,7 +109,8 @@ function App() {
           <span style={{color:'#f1f1f1'}}>Buy / Rent</span>
           {/* <span style={{paddingLeft:'2em'}}>{rent ? "Buy" : "Rent"}</span> */}
           <p></p>
-          <Button variant="contained" onClick={() => setMark([-33.8688, 151.2093])}>Search</Button>
+          <Button variant="contained" onClick={setAll}>Search</Button>
+          <p/><p/><p/><p/>
         </div>
       </div>
   </div>
