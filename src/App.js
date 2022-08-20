@@ -8,14 +8,6 @@ import { Map, Marker } from "pigeon-maps"
 // import 'leaflet/dist/leaflet.css';
 
 function App() {
-  const stateOptions = [
-    { value: "nsw", label: "NSW" },
-    { value: "qld", label: "QLD" },
-    { value: "wa", label: "WA" },
-    { value: "sa", label: "SA" },
-    { value: "vic", label: "VIC" },
-  ];
-
   const cityOptions = [
     { value: "sydney", label: "Sydney"},
     { value: "newcastle", label: "Newcastle"},
@@ -46,11 +38,7 @@ function App() {
   const setAll = () => {
     setCoor([-33.8688, 151.2093]);
     setZoom(11);
-
     setMark1([-33.8688, 151.2093]);
-    // setMark2([-33.8688, 151.2093]);
-    // setMark3([-33.8688, 151.2093]);
-    // setMark4([-33.8688, 151.2093]);
   }
 
   return (
@@ -81,10 +69,6 @@ function App() {
           </Map>
         </div>
         <div className='app-body'>
-          {/* <Select
-            options={stateOptions}
-            placeholder="Select a State"
-          /> */}
           <p></p>
           <Select
             options={ageOptions}
@@ -107,7 +91,6 @@ function App() {
             inputProps={{ 'aria-label': 'controlled' }}
           />
           <span style={{color:'#f1f1f1'}}>Buy / Rent</span>
-          {/* <span style={{paddingLeft:'2em'}}>{rent ? "Buy" : "Rent"}</span> */}
           <p></p>
           <Button variant="contained" onClick={setAll}>Search</Button>
           <p/><p/><p/><p/>
