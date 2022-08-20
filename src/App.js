@@ -1,9 +1,9 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { PureComponent, useState } from 'react';
 import Select from 'react-select'
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
-import { Map, Marker } from "pigeon-maps"
+import { Map, Marker, GeoJsonLoader } from "pigeon-maps"
 // import { MapContainer, TileLayer, Popup, Marker } from 'react-leaflet';
 // import 'leaflet/dist/leaflet.css';
 
@@ -36,11 +36,14 @@ function App() {
   const [zoom, setZoom] = useState(5);
   const [mark1, setMark1] = useState([0, 0]);
   const [rent, setRent] = useState(false);
+  const [geoJsonLink, setGeoJsonLink] = useState("");
+
 
   const setAll = () => {
     setCoor([-33.8688, 151.2093]);
     setZoom(11);
     setMark1([-33.8688, 151.2093]);
+    setGeoJsonLink(["https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/sydney.geojson"]);
   }
 
   return (
@@ -67,6 +70,14 @@ function App() {
         </MapContainer> */}
           <Map height={300}
             defaultCenter={coor} defaultZoom={4} zoom={zoom} center={coor}>
+            <GeoJsonLoader
+              link={geoJsonLink}
+              styleCallback={(feature, hover) =>
+                hover
+                  ? { fill: '#93c0d099', strokeWidth: '2'}
+                  : { fill: '#d4e6ec99', strokeWidth: '1'}
+              }
+            />
             <Marker width={50} anchor={mark1} />
           </Map>
         </div>
@@ -101,5 +112,35 @@ function App() {
   </div>
   );
 }
+
+// class App extends PureComponent {
+//   render() {
+//     // create an array with marker components
+//     // const LeafletMarkers = markers.map((marker) => (
+//     const LeafletMarkers = () => (
+//       <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+//       <TileLayer
+//         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+//         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+//       />
+//       <Marker position={[51.505, -0.09]}>
+//         <Popup>
+//           A pretty CSS3 popup. <br /> Easily customizable.
+//         </Popup>
+//       </Marker>
+//     </MapContainer>
+//     );
+
+//     const test = () => (
+//       <p>Test</p>
+//     )
+
+//     return (
+//       <div className="map">
+//           {LeafletMarkers}
+//       </div>
+//     );
+//   }
+// }
 
 export default App;
