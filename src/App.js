@@ -7,6 +7,8 @@ import { Map, Marker } from "pigeon-maps"
 // import { MapContainer, TileLayer, Popup, Marker } from 'react-leaflet';
 // import 'leaflet/dist/leaflet.css';
 
+import Sa2API from './api/sa2.js'; 
+
 function App() {
   const cityOptions = [
     { value: "sydney", label: "Sydney"},
