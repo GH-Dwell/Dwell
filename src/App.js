@@ -36,14 +36,19 @@ function App() {
   const [zoom, setZoom] = useState(5);
   const [mark1, setMark1] = useState([0, 0]);
   const [rent, setRent] = useState(false);
-  const [geoJsonLink, setGeoJsonLink] = useState("");
+  const [geoJsonLinkG, setGeoJsonLinkG] = useState("");
+  const [geoJsonLinkR, setGeoJsonLinkR] = useState("");
+  const [geoJsonLinkO, setGeoJsonLinkO] = useState("");
 
 
   const setAll = () => {
     setCoor([-33.8688, 151.2093]);
     setZoom(11);
     setMark1([-33.8688, 151.2093]);
-    setGeoJsonLink(["https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/sydney.geojson"]);
+    // setGeoJsonLink(["https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/sydney.geojson"]);
+    setGeoJsonLinkG(["https://raw.githubusercontent.com/GH-Dwell/Dwell/master/src/mock/sydney_green.geojson"]);
+    setGeoJsonLinkR(["https://raw.githubusercontent.com/GH-Dwell/Dwell/master/src/mock/sydney_red.geojson"]);
+    setGeoJsonLinkO(["https://raw.githubusercontent.com/GH-Dwell/Dwell/master/src/mock/sydney_orange.geojson"]);
   }
 
   return (
@@ -71,11 +76,27 @@ function App() {
           <Map height={300}
             defaultCenter={coor} defaultZoom={4} zoom={zoom} center={coor}>
             <GeoJsonLoader
-              link={geoJsonLink}
+              link={geoJsonLinkG}
               styleCallback={(feature, hover) =>
                 hover
-                  ? { fill: '#93c0d099', strokeWidth: '2'}
-                  : { fill: '#d4e6ec99', strokeWidth: '1'}
+                  ? { fill: '#5BD82299', strokeWidth: '2'}
+                  : { fill: '#9af66f99', strokeWidth: '1'}
+              }
+            />
+            <GeoJsonLoader
+              link={geoJsonLinkR}
+              styleCallback={(feature, hover) =>
+                hover
+                  ? { fill: '#AE432C99', strokeWidth: '2'}
+                  : { fill: '#ffc6b999', strokeWidth: '1'}
+              }
+            />
+            <GeoJsonLoader
+              link={geoJsonLinkO}
+              styleCallback={(feature, hover) =>
+                hover
+                  ? { fill: '#a79c1c99', strokeWidth: '2'}
+                  : { fill: '#fff15b99', strokeWidth: '1'}
               }
             />
             <Marker width={50} anchor={mark1} />
