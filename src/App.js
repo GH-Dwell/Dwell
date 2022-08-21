@@ -39,7 +39,7 @@ function App() {
   const [formState, setFormState] = useState({
     coords: [-33.8688, 151.2093], 
     cityValue: "Sydney", 
-    zoom: 11, 
+    zoom: 12, 
     mark: [0,0], 
     rent: false, 
   }); 
@@ -108,7 +108,7 @@ function App() {
           <h1>Dwell</h1>
         </div>
         <div className='app-map'>
-          <Map height={300}
+          <Map height={400}
             defaultCenter={coor} defaultZoom={4} zoom={zoom} center={coor}>
             <GeoJsonLoader
               link={geoJsonLinkG}
@@ -182,23 +182,19 @@ function App() {
           </Dialog> */}
         </div>
         <div className='app-body'>
-          <p></p>
           <Select
             options={ageOptions}
             placeholder="Select a Age Group"
           />
-          <p></p>
           <Select
             options={incomeOptions}
             placeholder="Select Weekly Income"
           />
-          <p></p>
           <Select
             options={cityOptions}
             placeholder="Select a Work Location"
             onChange={(event) => {setFormState({...formState, coords: event.coords});}}
           />
-          <p></p>
           <div className='sp'>
             <span style={{color:'#f1f1f1'}}>Buy</span>
             <Switch
@@ -208,9 +204,8 @@ function App() {
             />
             <span style={{color:'#f1f1f1'}}>Rent</span>
           </div>
-          <p></p>
           <Button variant="contained" onClick={setAll}>Search</Button>
-          <p/><p/><p/><p/>
+
         </div>
       </div>
   </div>
