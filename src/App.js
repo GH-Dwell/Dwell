@@ -1,9 +1,9 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { PureComponent, useState, useEffect } from 'react';
 import Select from 'react-select'
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
-import { Map, Marker } from "pigeon-maps"
+import { Map, Marker, GeoJsonLoader } from "pigeon-maps"
 // import { MapContainer, TileLayer, Popup, Marker } from 'react-leaflet';
 // import 'leaflet/dist/leaflet.css';
 
@@ -44,6 +44,10 @@ function App() {
   const [zoom, setZoom] = useState(5);
   const [mark1, setMark1] = useState([0, 0]);
   const [rent, setRent] = useState(false);
+  const [geoJsonLinkG, setGeoJsonLinkG] = useState("");
+  const [geoJsonLinkR, setGeoJsonLinkR] = useState("");
+  const [geoJsonLinkO, setGeoJsonLinkO] = useState("");
+
 
   useEffect(() => {
     Sa2API.getCities().then((res) => {
@@ -55,6 +59,10 @@ function App() {
     setCoor(formState.coords);
     setZoom(formState.zoom);
     setMark1(formState.mark1);
+    // setGeoJsonLink(["https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/sydney.geojson"]);
+    setGeoJsonLinkG(["https://raw.githubusercontent.com/GH-Dwell/Dwell/master/src/mock/sydney_green.geojson"]);
+    setGeoJsonLinkR(["https://raw.githubusercontent.com/GH-Dwell/Dwell/master/src/mock/sydney_red.geojson"]);
+    setGeoJsonLinkO(["https://raw.githubusercontent.com/GH-Dwell/Dwell/master/src/mock/sydney_orange.geojson"]);
   }
 
   return (
@@ -81,6 +89,30 @@ function App() {
         </MapContainer> */}
           <Map height={300}
             defaultCenter={coor} defaultZoom={4} zoom={zoom} center={coor}>
+            <GeoJsonLoader
+              link={geoJsonLinkG}
+              styleCallback={(feature, hover) =>
+                hover
+                  ? { fill: '#5BD82299', strokeWidth: '2'}
+                  : { fill: '#9af66f99', strokeWidth: '1'}
+              }
+            />
+            <GeoJsonLoader
+              link={geoJsonLinkR}
+              styleCallback={(feature, hover) =>
+                hover
+                  ? { fill: '#AE432C99', strokeWidth: '2'}
+                  : { fill: '#ffc6b999', strokeWidth: '1'}
+              }
+            />
+            <GeoJsonLoader
+              link={geoJsonLinkO}
+              styleCallback={(feature, hover) =>
+                hover
+                  ? { fill: '#a79c1c99', strokeWidth: '2'}
+                  : { fill: '#fff15b99', strokeWidth: '1'}
+              }
+            />
             <Marker width={50} anchor={mark1} />
           </Map>
         </div>
@@ -116,5 +148,35 @@ function App() {
   </div>
   );
 }
+
+// class App extends PureComponent {
+//   render() {
+//     // create an array with marker components
+//     // const LeafletMarkers = markers.map((marker) => (
+//     const LeafletMarkers = () => (
+//       <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+//       <TileLayer
+//         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+//         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+//       />
+//       <Marker position={[51.505, -0.09]}>
+//         <Popup>
+//           A pretty CSS3 popup. <br /> Easily customizable.
+//         </Popup>
+//       </Marker>
+//     </MapContainer>
+//     );
+
+//     const test = () => (
+//       <p>Test</p>
+//     )
+
+//     return (
+//       <div className="map">
+//           {LeafletMarkers}
+//       </div>
+//     );
+//   }
+// }
 
 export default App;
