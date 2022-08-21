@@ -47,14 +47,25 @@ function App() {
   const [geoJsonLinkR, setGeoJsonLinkR] = useState("");
   const [geoJsonLinkO, setGeoJsonLinkO] = useState("");
 
-  const [open, setOpen] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const divRef = React.useRef();
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  // const divRef = useRef();
 
-  const handleClickOpen = () => {
+  const [curPos, setCurPos] = useState ([0, 0]);
+  const [affordText, setAffordText] = useState("");
+
+  const handleClickOpen = (a) => {
     setOpen(true);
-    setAnchorEl(divRef.current);
+    setAffordText(a);
+    // setAnchorEl([event.clientX, event.clientY]);
+    // setCurPos([event.clientX, event.clientY]);
+    // setAnchorEl(divRef.current);
   };
+
+  // const onClick = (c) => {
+  //   setCurPos([c.clientX, c.clientY]);
+  //   setAnchorEl([c.clientX, c.clientY]);
+  // };
 
   const handleClose = () => {
     setOpen(false);
@@ -87,7 +98,7 @@ function App() {
             defaultCenter={coor} defaultZoom={4} zoom={zoom} center={coor}>
             <GeoJsonLoader
               link={geoJsonLinkG}
-              onClick={handleClickOpen}
+              onClick={() => {handleClickOpen('Affordable')}}
               variant="contained"
               styleCallback={(feature, hover) =>
                 hover
@@ -97,7 +108,7 @@ function App() {
             />
             <GeoJsonLoader
               link={geoJsonLinkR}
-              onClick={handleClickOpen}
+              onClick={() => {handleClickOpen('Not an affordable')}}
               variant="contained"
               styleCallback={(feature, hover) =>
                 hover
@@ -107,7 +118,7 @@ function App() {
             />
             <GeoJsonLoader
               link={geoJsonLinkO}
-              onClick={handleClickOpen}
+              onClick={() => {handleClickOpen('Somewhat affordable')}}
               variant="contained"
               styleCallback={(feature, hover) =>
                 hover
@@ -123,13 +134,14 @@ function App() {
               onClose={handleClose}
               anchorOrigin={{
                 vertical: 85,
-                horizontal: "center"
+                // vertical: coor[1],
+                horizontal: "center",
               }}
               transformOrigin={{
-                horizontal: "center"
+                horizontal: "center",
               }}
             >
-              <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
+              <Typography sx={{ p: 2 }}>{affordText} area!</Typography>
             </Popover>
             </Overlay>
           </Map>
