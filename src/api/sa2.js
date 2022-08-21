@@ -8,7 +8,6 @@ const Sa2API = {
         formData.append('location', loc); 
         return axios.post(dbUrl + '/', formData
         ).then((res) => {
-            console.log("Response: ", res.data); 
             return res.data; 
         })
         .catch((err) => {
