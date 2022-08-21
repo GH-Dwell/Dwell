@@ -6,6 +6,7 @@ import Switch from '@mui/material/Switch';
 import { Map, Marker, GeoJson, GeoJsonLoader, Overlay } from "pigeon-maps"; 
 import { Popover, Typography } from '@mui/material';
 import Helmet from 'react-helmet';
+import logo from './img/logo.png';
 // import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 import Sa2API from './api/sa2.js'; 
@@ -98,9 +99,12 @@ function App() {
       <div>
         <Helmet>
           <title>Dwell</title>
-          <link rel='icon' type='image/png' href='favicon.ico' size='16x16'/>
+          <link rel='icon' type='image/png'
+          href='https://raw.githubusercontent.com/GH-Dwell/Dwell/master/src/img/favicon.ico'
+          size='16x16'/>
         </Helmet>
         <div className='app-header'>
+          <img src={logo} alt='logo' style={{width:"50px", height:'50px'}}/>
           <h1>Dwell</h1>
         </div>
         <div className='app-map'>
@@ -195,12 +199,15 @@ function App() {
             onChange={(event) => {setFormState({...formState, coords: event.coords});}}
           />
           <p></p>
-          <Switch
-            // checked={checked}
-            // onChange={handleChange}
-            inputProps={{ 'aria-label': 'controlled' }}
-          />
-          <span style={{color:'#f1f1f1'}}>Buy / Rent</span>
+          <div className='sp'>
+            <span style={{color:'#f1f1f1'}}>Buy</span>
+            <Switch
+              // checked={checked}
+              // onChange={handleChange}
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
+            <span style={{color:'#f1f1f1'}}>Rent</span>
+          </div>
           <p></p>
           <Button variant="contained" onClick={setAll}>Search</Button>
           <p/><p/><p/><p/>

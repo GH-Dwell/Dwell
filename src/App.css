@@ -2,8 +2,16 @@
   background-color: #282c34;
   display: flex;
   justify-content: center;
+  align-items: center;
   font-size: calc(10px + 1vmin);
   color: #f1f1f1;
+  gap: .5rem;
+}
+
+.sp{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .app-map {
