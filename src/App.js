@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select'
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
-import { Map, Marker, GeoJsonLoader, Overlay } from "pigeon-maps"
+import { Map, Marker, GeoJson, GeoJsonLoader, Overlay } from "pigeon-maps"; 
 import { Popover, Typography } from '@mui/material';
 // import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
@@ -17,6 +17,8 @@ function App() {
     { value: "tamworth", label: "Tamworth", coords: [-33.8688, 151.2093]},
     { value: "wagga", label: "Wagga Wagga", coords: [-33.8688, 151.2093]},
   ]);
+
+  const [geodata, setGeoData] = useState([]); 
 
   const ageOptions = [
     { value: "21-30", label: "21-30"},
@@ -81,6 +83,9 @@ function App() {
     setCoor(formState.coords);
     setZoom(formState.zoom);
     setMark(formState.mark);
+    Sa2API.getStatsByLoc(formState.cityValue).then((res) => {
+      setGeoData(res); 
+    })
     // setGeoJsonLink(["https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/sydney.geojson"]);
     setGeoJsonLinkG(["https://raw.githubusercontent.com/GH-Dwell/Dwell/master/src/mock/sydney_green.geojson"]);
     setGeoJsonLinkR(["https://raw.githubusercontent.com/GH-Dwell/Dwell/master/src/mock/sydney_red.geojson"]);
