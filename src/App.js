@@ -4,7 +4,8 @@ import Select from 'react-select'
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import { Map, Marker, GeoJsonLoader, Overlay } from "pigeon-maps"
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Popover, Typography } from '@mui/material';
+// import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 import Sa2API from './api/sa2.js'; 
 
@@ -47,9 +48,12 @@ function App() {
   const [geoJsonLinkO, setGeoJsonLinkO] = useState("");
 
   const [open, setOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const divRef = React.useRef();
 
   const handleClickOpen = () => {
     setOpen(true);
+    setAnchorEl(divRef.current);
   };
 
   const handleClose = () => {
@@ -84,6 +88,7 @@ function App() {
             <GeoJsonLoader
               link={geoJsonLinkG}
               onClick={handleClickOpen}
+              variant="contained"
               styleCallback={(feature, hover) =>
                 hover
                   ? { fill: '#5BD82299', strokeWidth: '2'}
@@ -93,6 +98,7 @@ function App() {
             <GeoJsonLoader
               link={geoJsonLinkR}
               onClick={handleClickOpen}
+              variant="contained"
               styleCallback={(feature, hover) =>
                 hover
                   ? { fill: '#AE432C99', strokeWidth: '2'}
@@ -102,6 +108,7 @@ function App() {
             <GeoJsonLoader
               link={geoJsonLinkO}
               onClick={handleClickOpen}
+              variant="contained"
               styleCallback={(feature, hover) =>
                 hover
                   ? { fill: '#a79c1c99', strokeWidth: '2'}
@@ -109,8 +116,24 @@ function App() {
               }
             />
             <Marker width={50} anchor={mark} />
+            <Overlay>
+            <Popover
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 85,
+                horizontal: "center"
+              }}
+              transformOrigin={{
+                horizontal: "center"
+              }}
+            >
+              <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
+            </Popover>
+            </Overlay>
           </Map>
-          <Dialog
+          {/* <Dialog
             open={open}
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
@@ -130,7 +153,7 @@ function App() {
                 Okay
               </Button>
             </DialogActions>
-          </Dialog>
+          </Dialog> */}
         </div>
         <div className='app-body'>
           <p></p>
