@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select'
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
@@ -10,13 +10,13 @@ import { Map, Marker } from "pigeon-maps"
 import Sa2API from './api/sa2.js'; 
 
 function App() {
-  const cityOptions = [
-    { value: "sydney", label: "Sydney"},
-    { value: "newcastle", label: "Newcastle"},
-    { value: "orange", label: "Orange"},
-    { value: "tamworth", label: "Tamworth"},
-    { value: "wagga", label: "Wagga Wagga"},
-  ];
+  const [cityOptions, setCityOptions] = useState([
+    { value: "sydney", label: "Sydney", coords: [-33.8688, 151.2093]},
+    { value: "newcastle", label: "Newcastle", coords: [-32.9280, 151.7816]},
+    { value: "orange", label: "Orange", coords: [-33.8688, 151.2093]},
+    { value: "tamworth", label: "Tamworth", coords: [-33.8688, 151.2093]},
+    { value: "wagga", label: "Wagga Wagga", coords: [-33.8688, 151.2093]},
+  ]);
 
   const ageOptions = [
     { value: "21-30", label: "21-30"},
@@ -32,15 +32,29 @@ function App() {
     { value: "3000-3999", label: "3000-3999"},
   ];
 
+  const [formState, setFormState] = useState({
+    coords: [-33.8688, 151.2093], 
+    cityValue: "Sydney", 
+    zoom: 11, 
+    mark1: [0,0], 
+    rent: false, 
+  }); 
+
   const [coor, setCoor] = useState([-33.8688, 151.2093]);
   const [zoom, setZoom] = useState(5);
   const [mark1, setMark1] = useState([0, 0]);
   const [rent, setRent] = useState(false);
 
+  useEffect(() => {
+    Sa2API.getCities().then((res) => {
+      setCityOptions(res); 
+    }); 
+  }, []);
+
   const setAll = () => {
-    setCoor([-33.8688, 151.2093]);
-    setZoom(11);
-    setMark1([-33.8688, 151.2093]);
+    setCoor(formState.coords);
+    setZoom(formState.zoom);
+    setMark1(formState.mark1);
   }
 
   return (
@@ -85,6 +99,7 @@ function App() {
           <Select
             options={cityOptions}
             placeholder="Select a Work Location"
+            onChange={(event) => {setFormState({...formState, coords: event.coords});}}
           />
           <p></p>
           <Switch
