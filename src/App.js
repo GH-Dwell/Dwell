@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import { Map, Marker, GeoJson, GeoJsonLoader, Overlay } from "pigeon-maps"; 
 import { Popover, Typography } from '@mui/material';
+import Helmet from 'react-helmet';
 // import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 import Sa2API from './api/sa2.js'; 
@@ -95,6 +96,10 @@ function App() {
   return (
     <div className="App">
       <div>
+        <Helmet>
+          <title>Dwell</title>
+          <link rel='icon' type='image/png' href='favicon.ico' size='16x16'/>
+        </Helmet>
         <div className='app-header'>
           <h1>Dwell</h1>
         </div>
