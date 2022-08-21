@@ -16,8 +16,14 @@ def get_df():
     return df
 
 df = get_df()
+dests = pd.DataFrame(data={
+    'value': [ "Sydney", "Melbourne", "Brisbane", "Adelaide", "Perth", "Hobart", "Darwin", "Canberrra" ], 
+    'label': [ "Sydney", "Melbourne", "Brisbane", "Adelaide", "Perth", "Hobart", "Darwin", "Canberra" ], 
+    'coords': [ [-33.8688, 151.2093], [-37.8143, 144.9611], [-27.4705, 153.0261], [-34.9286, 138.6009], [-31.9525, 115.8613], 
+        [-42.8785, 147.3242], [-12.4648, 130.8440], [-35.3074, 149.1243] ]
+})
 
-@app.route("/", methods=("GET", "POST"))
+@app.route("/", methods=["GET", "POST"])
 @cross_origin()
 def serve_all(): 
     if request.method == "POST": 
@@ -26,6 +32,12 @@ def serve_all():
     else: 
         result = df.head().to_dict(orient='records')
     return result
+
+@app.route("/cities", methods=["GET"])
+@cross_origin()
+def serve_cities(): 
+    # result = pd.unique(df["city"][df["city"] != "Regional"])
+    return dests.to_dict(orient='records')
 
 if __name__ == '__main__': 
     app.run(host='0.0.0.0')
