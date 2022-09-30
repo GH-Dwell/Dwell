@@ -52,24 +52,13 @@ function App() {
   const [geoJsonLinkO, setGeoJsonLinkO] = useState("");
 
   const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
-  // const divRef = useRef();
-
-  const [curPos, setCurPos] = useState ([0, 0]);
+  const [anchor, setAnchor] = useState(null);
   const [affordText, setAffordText] = useState("");
 
-  const handleClickOpen = (a) => {
+  const handleOpen = (a) => {
     setOpen(true);
     setAffordText(a);
-    // setAnchorEl([event.clientX, event.clientY]);
-    // setCurPos([event.clientX, event.clientY]);
-    // setAnchorEl(divRef.current);
   };
-
-  // const onClick = (c) => {
-  //   setCurPos([c.clientX, c.clientY]);
-  //   setAnchorEl([c.clientX, c.clientY]);
-  // };
 
   const handleClose = () => {
     setOpen(false);
@@ -88,7 +77,6 @@ function App() {
     Sa2API.getStatsByLoc(formState.cityValue).then((res) => {
       setGeoData(res); 
     })
-    // setGeoJsonLink(["https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/sydney.geojson"]);
     setGeoJsonLinkG(["https://raw.githubusercontent.com/GH-Dwell/Dwell/master/src/mock/sydney_green.geojson"]);
     setGeoJsonLinkR(["https://raw.githubusercontent.com/GH-Dwell/Dwell/master/src/mock/sydney_red.geojson"]);
     setGeoJsonLinkO(["https://raw.githubusercontent.com/GH-Dwell/Dwell/master/src/mock/sydney_orange.geojson"]);
@@ -101,85 +89,67 @@ function App() {
           <title>Dwell</title>
           <link rel='icon' type='image/png'
           href='https://raw.githubusercontent.com/GH-Dwell/Dwell/master/src/img/favicon.ico'
-          size='16x16'/>
+          size='16x16'
+          />
         </Helmet>
         <div className='app-header'>
           <img src={logo} alt='logo' style={{width:"50px", height:'50px'}}/>
           <h1>Dwell</h1>
         </div>
-        <div className='app-map'>
-          <Map height={400}
-            defaultCenter={coor} defaultZoom={4} zoom={zoom} center={coor}>
-            <GeoJsonLoader
-              link={geoJsonLinkG}
-              onClick={() => {handleClickOpen('Affordable')}}
-              variant="contained"
-              styleCallback={(feature, hover) =>
-                hover
-                  ? { fill: '#5BD82299', strokeWidth: '2'}
-                  : { fill: '#9af66f99', strokeWidth: '1'}
-              }
-            />
-            <GeoJsonLoader
-              link={geoJsonLinkR}
-              onClick={() => {handleClickOpen('Not an affordable')}}
-              variant="contained"
-              styleCallback={(feature, hover) =>
-                hover
-                  ? { fill: '#AE432C99', strokeWidth: '2'}
-                  : { fill: '#ffc6b999', strokeWidth: '1'}
-              }
-            />
-            <GeoJsonLoader
-              link={geoJsonLinkO}
-              onClick={() => {handleClickOpen('Somewhat affordable')}}
-              variant="contained"
-              styleCallback={(feature, hover) =>
-                hover
-                  ? { fill: '#a79c1c99', strokeWidth: '2'}
-                  : { fill: '#fff15b99', strokeWidth: '1'}
-              }
-            />
-            <Marker width={50} anchor={mark} />
-            <Overlay>
-            <Popover
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: 85,
-                // vertical: coor[1],
-                horizontal: "center",
-              }}
-              transformOrigin={{
-                horizontal: "center",
-              }}
-            >
-              <Typography sx={{ p: 2 }}>{affordText} area!</Typography>
-            </Popover>
-            </Overlay>
-          </Map>
-          {/* <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">{"Location Name Here"}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Stats/Info here.
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Cancel
-              </Button>
-              <Button onClick={handleClose} color="primary" autoFocus>
-                Okay
-              </Button>
-            </DialogActions>
-          </Dialog> */}
+        <div className='map-div'>
+          <div className='app-map'>
+            <Map height={400}
+              defaultCenter={coor} defaultZoom={4} zoom={zoom} center={coor}>
+              <GeoJsonLoader
+                link={geoJsonLinkG}
+                onClick={() => {handleOpen('Affordable')}}
+                variant="contained"
+                styleCallback={(feature, hover) =>
+                  hover
+                    ? { fill: '#5BD82299', strokeWidth: '2'}
+                    : { fill: '#9af66f99', strokeWidth: '1'}
+                }
+              />
+              <GeoJsonLoader
+                link={geoJsonLinkR}
+                onClick={() => {handleOpen('Not an affordable')}}
+                variant="contained"
+                styleCallback={(feature, hover) =>
+                  hover
+                    ? { fill: '#AE432C99', strokeWidth: '2'}
+                    : { fill: '#ffc6b999', strokeWidth: '1'}
+                }
+              />
+              <GeoJsonLoader
+                link={geoJsonLinkO}
+                onClick={() => {handleOpen('Somewhat affordable')}}
+                variant="contained"
+                styleCallback={(feature, hover) =>
+                  hover
+                    ? { fill: '#a79c1c99', strokeWidth: '2'}
+                    : { fill: '#fff15b99', strokeWidth: '1'}
+                }
+              />
+              <Marker width={50} anchor={mark} />
+              <Overlay>
+              <Popover
+                open={open}
+                anchorEl={anchor}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 85,
+                  // vertical: coor[1],
+                  horizontal: "center",
+                }}
+                transformOrigin={{
+                  horizontal: "center",
+                }}
+              >
+                <Typography sx={{ p: 2 }}>{affordText} area!</Typography>
+              </Popover>
+              </Overlay>
+            </Map>
+          </div>
         </div>
         <div className='app-body'>
           <Select
